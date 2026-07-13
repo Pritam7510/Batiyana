@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+{% block topbar_title %}History{% endblock %}
+
+{% block content %}
+
+<div class="stat-grid">
+  <div class="card stat-card">
+    <div class="row-sub">Total Items</div>
+    <div class="stat-num">{{ stats.total_items }}</div>
+    <div class="stat-growth">+{{ stats.items_growth }}% this month</div>
+  </div>
+  <div class="card stat-card stat-card-green">
+    <div class="row-sub" style="color:#DCEFE0;">Total Savings</div>
+    <div class="stat-num" style="color:#fff;">${{ '%.2f'|format(stats.total_savings) }}</div>
+    <div class="stat-growth" style="color:#DCEFE0;">Smart AI Deals</div>
+  </div>
+</div>
+
+<div class="card">
+  <div style="display:flex;align-items:center;justify-content:space-between;">
+    <div>
+      <div style="font-weight:800;">Spending Insight</div>
+      <div class="row-sub">Your activity over 6 months</div>
+    </div>
+    <span style="color:var(--leaf);font-weight:700;font-size:.85rem;">↗ {{ stats.spend_growth }}% vs last year</span>
+  </div>
+  <div class="bar-chart">
+    {% for m in stats.months %}
+    
+    {% endfor %}
+  </div>
+</div>
+
+<div class="section-head"><h2>Frequently Purchased</h2></div>
+<div class="scroll-row">
+  {% for f in frequent %}
+  <div class="product-card">
+    <div class="product-thumb thumb-{{ f.img }}">{% if f.img=='bakery' %}🍞{% elif f.img=='fruit' %}🥑{% else %}🥬{% endif %}</div>
+    <div class="product-info">
+      <div class="product-name">{{ f.name }}</div>
+      <div class="product-bottom" style="justify-content:flex-start;gap:10px;">
+        <span class="price">${{ '%.2f'|format(f.price) }}</span>
+      </div>
+      <button class="btn btn-outline btn-sm" style="width:100%;margin-top:8px;">Reorder</button>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+
+<div class="section-head">
+  <h2>Recent Trips</h2>
+  <a href="#" class="link-green">View All</a>
+</div>
+{% for trip in trips %}
+<div class="card trip-row">
+  <div class="row-icon">{% if trip.icon=='basket' %}🧺{% elif trip.icon=='case' %}💼{% else %}🍽️{% endif %}</div>
+  <div class="row-body">
+    <div class="row-title">{{ trip.name }}</div>
+    <div class="row-sub">{{ trip.date }} &bull; {{ trip.items }} items</div>
+  </div>
+  <div style="text-align:right;">
+    <div style="font-weight:800;">${{ '%.2f'|format(trip.total) }}</div>
+    <div style="color:var(--leaf);font-size:.78rem;font-weight:700;">Saved ${{ '%.2f'|format(trip.saved) }}</div>
+  </div>
+</div>
+{% endfor %}
+
+{% endblock %}

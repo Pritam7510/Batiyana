@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Create Account — BATIYANA</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700;9..144,900&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
+
+</head>
+
+<body>
+
+<div class="stage">
+
+    <div class="bg-art" aria-hidden="true">
+
+        <svg class="blob blob-a" viewBox="0 0 600 600" xmlns="http://www.w3.org/2000/svg">
+            <path fill="currentColor" d="M421,320Q400,390,330,420Q260,450,190,410Q120,370,110,290Q100,210,160,150Q220,90,300,100Q380,110,410,180Q440,250,421,320Z"/>
+        </svg>
+
+        <svg class="blob blob-b" viewBox="0 0 600 600" xmlns="http://www.w3.org/2000/svg">
+            <path fill="currentColor" d="M440,300Q430,380,360,420Q290,460,210,440Q130,420,100,340Q70,260,120,190Q170,120,250,110Q330,100,390,150Q450,200,440,300Z"/>
+        </svg>
+
+        <svg class="wave" viewBox="0 0 1200 200" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M0,100 Q60,20 120,100 T240,100 T360,100 T480,100 T600,100 T720,100 T840,100 T960,100 T1080,100 T1200,100"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="3"
+                  opacity="0.35"/>
+            <path d="M0,100 Q60,150 120,100 T240,100 T360,100 T480,100 T600,100 T720,100 T840,100 T960,100 T1080,100 T1200,100"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="3"
+                  opacity="0.22"/>
+        </svg>
+
+        <div class="motif motif-1">🥑</div>
+        <div class="motif motif-2">🥛</div>
+        <div class="motif motif-3">🎙️</div>
+        <div class="motif motif-4">🍞</div>
+        <div class="motif motif-5">🍓</div>
+        <div class="motif motif-6">🛒</div>
+
+    </div>
+
+    <div class="login-card">
+
+        <div class="brand">
+
+            <div class="brand-mark">
+                <svg width="30"
+                     height="30"
+                     viewBox="0 0 24 24"
+                     fill="none"
+                     stroke="currentColor"
+                     stroke-width="2"
+                     stroke-linecap="round"
+                     stroke-linejoin="round">
+
+                    <rect x="9" y="2" width="6" height="12" rx="3"/>
+                    <path d="M5 10a7 7 0 0 0 14 0"/>
+                    <line x1="12" y1="19" x2="12" y2="22"/>
+
+                </svg>
+            </div>
+
+            <h1>BATIYANA</h1>
+
+            <p class="tagline">
+                Bolala Tar Chalal
+            </p>
+
+        </div>
+
+        <!-- Error Message -->
+
+        {% if error %}
+        <div class="alert">
+            {{ error }}
+        </div>
+        {% endif %}
+
+        <!-- Flash Messages -->
+
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert success">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        <form method="POST"
+              action="{{ url_for('signup') }}"
+              class="login-form">
+
+            <label class="field">
+
+                <span>Full Name</span>
+
+                <input
+                    type="text"
+                    name="name"
+                    placeholder="Enter Full Name"
+                    autocomplete="name"
+                    minlength="3"
+                    required>
+
+            </label>
+
+            <label class="field">
+
+                <span>Email Address</span>
+
+                <input
+                    type="email"
+                    name="email"
+                    placeholder="example@gmail.com"
+                    autocomplete="email"
+                    required>
+
+            </label>
+
+            <label class="field">
+
+                <span>Username</span>
+
+                <input
+                    type="text"
+                    name="username"
+                    placeholder="Choose Username"
+                    autocomplete="username"
+                    minlength="4"
+                    maxlength="20"
+                    required>
+
+            </label>
+
+            <label class="field">
+
+                <span>Password</span>
+
+                <input
+                    id="password"
+                    type="password"
+                    name="password"
+                    placeholder="Minimum 6 characters"
+                    autocomplete="new-password"
+                    minlength="6"
+                    required>
+
+            </label>
+
+            <div style="margin-bottom:18px;">
+                <input
+                    type="checkbox"
+                    id="showPassword">
+
+                <label for="showPassword">
+                    Show Password
+                </label>
+            </div>
+
+            <button
+                type="submit"
+                class="btn-login">
+
+                Create Account
+
+            </button>
+
+        </form>
+
+        <p class="hint">
+            Already have an account?
+
+            <a href="{{ url_for('login') }}"
+               class="link-green">
+
+                Log In
+
+            </a>
+
+        </p>
+
+    </div>
+
+    <p class="footnote">
+        Create your account and securely sync your shopping list and voice history using Firebase.
+    </p>
+
+</div>
+
+<script>
+
+const password=document.getElementById("password");
+
+const show=document.getElementById("showPassword");
+
+show.addEventListener("change",function(){
+
+    password.type=this.checked?"text":"password";
+
+});
+
+</script>
+
+</body>
+</html>

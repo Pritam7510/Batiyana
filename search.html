@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block topbar_title %}Search Products{% endblock %}
+
+{% block content %}
+<div class="card search-card">
+  <form action="{{ url_for('search') }}" method="get">
+    <input type="search" name="q" value="{{ query }}" placeholder="Search for milk, bread, eggs..." autocomplete="off">
+    <button type="submit" class="btn btn-primary btn-block">Search</button>
+  </form>
+</div>
+
+{% if query %}
+<div class="section-head">
+  <h2>Search results for “{{ query }}”</h2>
+  <span class="pill pill-green">{{ results|length }} items found</span>
+</div>
+
+{% if results %}
+  {% for item in results %}
+  <div class="card">
+    <div class="row" style="justify-content:space-between; gap:10px;">
+      {% if item.get('image') %}
+        <img src="{{ item.image }}" alt="{{ item.name }}" style="width:50px;height:50px;border-radius:6px;object-fit:cover;" onerror="this.style.display='none'">
+      {% endif %}
+      <div>
+        <div class="row-title">{{ item.name }}</div>
+        <div class="row-sub">{{ item.meta }} • {{ item.category }}</div>
+      </div>
+      <div style="text-align:right;">
+        {% if item.get('price') %}
+          <div class="price">₹{{ '%.2f'|format(item.price) }}</div>
+        {% else %}
+          <div class="price">Qty {{ item.qty }}</div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+{% else %}
+  <p style="color:var(--muted);margin-top:10px;">No products matched your search. Try another word like "milk" or "rice".</p>
+{% endif %}
+{% else %}
+<p style="color:var(--muted);margin-top:12px;">Search for daily essentials, fast-moving groceries, or voice commands like "Add milk".</p>
+{% endif %}
+{% endblock %}

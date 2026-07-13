@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+{% block topbar_title %}Hello, {{ user.name.split(' ')[0] }} 👋{% endblock %}
+
+{% block content %}
+
+<a href="{{ url_for('voice') }}" class="mic-hero">
+  <div class="mic-circle">
+    <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="2" width="6" height="12" rx="3"/><path d="M5 10a7 7 0 0 0 14 0"/><line x1="12" y1="19" x2="12" y2="22"/></svg>
+  </div>
+  <p class="mic-hint">Tap to add items to your list</p>
+</a>
+
+<div class="card">
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
+    <h2 style="font-family:var(--font-display);font-size:1.1rem;margin:0;">Your Weekly List</h2>
+    <span class="pill pill-green">{{ total_items }} Items</span>
+  </div>
+
+  {% for item in list_preview %}
+  <div class="row">
+    <div class="check-circle {% if item.done %}checked{% endif %}">
+      {% if item.done %}
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+      {% endif %}
+    </div>
+    <div class="row-body">
+      <div class="row-title">{{ item.name }}</div>
+    </div>
+    <span style="color:var(--muted);font-size:.85rem;font-weight:600;">{{ item.qty }} qty</span>
+  </div>
+  {% endfor %}
+
+  <a href="{{ url_for('grocery_list') }}" style="display:block;text-align:center;margin-top:10px;color:var(--sky);font-weight:700;font-size:.88rem;">View Full List</a>
+</div>
+
+<div class="section-head">
+  <h2>Recommended for You</h2>
+</div>
+<div class="scroll-row">
+  {% for rec in recommendations %}
+  <div class="product-card">
+    <div class="product-thumb thumb-{{ rec.img }}">
+      {% if rec.img=='bakery' %}🍞{% elif rec.img=='fruit' %}🍎{% elif rec.img=='granola' %}🥣{% else %}🥬{% endif %}
+    </div>
+    <div class="product-info">
+      <div class="product-cat">{{ rec.category }}</div>
+      <div class="product-name">{{ rec.name }}</div>
+      <div class="product-bottom">
+        <span class="price">${{ '%.2f'|format(rec.price) }}</span>
+        <button class="add-btn">+</button>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+
+<div class="section-head">
+  <h2>Recent Voice Notes</h2>
+  <a href="{{ url_for('voice') }}" class="link-green">View All</a>
+</div>
+{% for note in voice_notes %}
+<div class="voice-note">
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="2" width="6" height="12" rx="3"/><path d="M5 10a7 7 0 0 0 14 0"/><line x1="12" y1="19" x2="12" y2="22"/></svg>
+  <div>
+    <p class="voice-note-text">&ldquo;{{ note.text }}&rdquo;</p>
+    <span class="voice-note-when">{{ note.when }}</span>
+  </div>
+</div>
+{% endfor %}
+
+
+
+{% endblock %}

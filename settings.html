@@ -1,0 +1,129 @@
+{% extends "base.html" %}
+{% block topbar_title %}Settings{% endblock %}
+
+{% block content %}
+
+<div class="card profile-card">
+  <div class="avatar-lg">{{ user.initials }}</div>
+  <div>
+    <div style="font-weight:800;font-size:1.05rem;">{{ user.name }}</div>
+    <div class="row-sub">{{ user.email }}</div>
+    <a href="#" class="link-green" style="display:inline-flex;align-items:center;gap:4px;margin-top:4px;">
+      Edit Profile
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.12 2.12 0 0 1 3 3L12 15l-4 1 1-4Z"/></svg>
+    </a>
+  </div>
+</div>
+
+<div class="section-label">Preferences</div>
+<div class="card" style="padding:4px 18px;">
+  <div class="row">
+    <div class="row-icon">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10Z"/></svg>
+    </div>
+    <div class="row-body">
+      <div class="row-title">Language</div>
+      <div class="row-sub">English, Hindi, Marathi</div>
+    </div>
+    <span class="pill pill-blue">{{ user.language }}</span>
+    <svg class="chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+  </div>
+
+  <div class="row">
+    <div class="row-icon">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="2" width="6" height="12" rx="3"/><path d="M5 10a7 7 0 0 0 14 0"/><line x1="12" y1="19" x2="12" y2="22"/></svg>
+    </div>
+    <div class="row-body">
+      <div class="row-title">Voice Recognition</div>
+      <div class="row-sub">Enhanced accuracy enabled</div>
+    </div>
+    <label class="switch">
+      <input type="checkbox" {% if user.voice_recognition %}checked{% endif %} onchange="updateField('voice_recognition')">
+      <span class="slider"></span>
+    </label>
+  </div>
+
+  <div class="row">
+    <div class="row-icon">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79Z"/></svg>
+    </div>
+    <div class="row-body">
+      <div class="row-title">Dark Mode</div>
+      <div class="row-sub">Sync with system settings</div>
+    </div>
+    <label class="switch">
+      <input type="checkbox" {% if user.dark_mode %}checked{% endif %} onchange="updateField('dark_mode')">
+      <span class="slider"></span>
+    </label>
+  </div>
+</div>
+
+<div class="section-label">Smart Features</div>
+<div class="card" style="padding:4px 18px;">
+  <div class="row">
+    <div class="row-icon">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+    </div>
+    <div class="row-body">
+      <div class="row-title">Notifications</div>
+      <div class="row-sub">Delivery updates and alerts</div>
+    </div>
+    <label class="switch">
+      <input type="checkbox" {% if user.notifications %}checked{% endif %} onchange="updateField('notifications')">
+      <span class="slider"></span>
+    </label>
+  </div>
+
+  <div class="row">
+    <div class="row-icon">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18h6"/><path d="M10 22h4"/><path d="M12 2a7 7 0 0 0-4 12.7c.6.5 1 1.2 1 2.05V17h6v-2.25c0-.85.4-1.55 1-2.05A7 7 0 0 0 12 2Z"/></svg>
+    </div>
+    <div class="row-body">
+      <div class="row-title">AI Suggestions</div>
+      <div class="row-sub">Personalized grocery lists</div>
+    </div>
+    <label class="switch">
+      <input type="checkbox" {% if user.ai_suggestions %}checked{% endif %} onchange="updateField('ai_suggestions')">
+      <span class="slider"></span>
+    </label>
+  </div>
+</div>
+
+<div class="section-label">Account</div>
+<div class="card" style="padding:4px 18px;">
+  <a href="#" class="row">
+    <div class="row-icon">💳</div>
+    <div class="row-body"><div class="row-title">Payment Methods</div></div>
+    <svg class="chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+  </a>
+  <a href="{{ url_for('history') }}" class="row">
+    <div class="row-icon">📍</div>
+    <div class="row-body"><div class="row-title">Order History</div></div>
+    <svg class="chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+  </a>
+  <a href="#" class="row">
+    <div class="row-icon">🛡️</div>
+    <div class="row-body"><div class="row-title">Privacy &amp; Security</div></div>
+    <svg class="chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+  </a>
+  <a href="{{ url_for('logout') }}" class="row" style="color:var(--coral);">
+    <div class="row-icon" style="color:var(--coral);">↪</div>
+    <div class="row-body"><div class="row-title" style="color:var(--coral);">Logout</div></div>
+  </a>
+</div>
+
+<p style="text-align:center;color:var(--muted);font-size:.75rem;margin:24px 0 90px;">BATIYANA v2.4.0</p>
+
+
+
+{% endblock %}
+
+{% block extra_head %}
+<script>
+function updateField(field){
+  const body = new URLSearchParams();
+  body.append('field', field);
+  fetch('/profile/update', {method:'POST', body});
+}
+</script>
+{% endblock %}

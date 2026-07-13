@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+{% block topbar_title %}Suggestions{% endblock %}
+
+{% block content %}
+
+<div class="card swap-card">
+  <div class="swap-tag">✨ Smart Swap</div>
+  <div class="swap-row">
+    <div class="swap-thumb">🥛</div>
+    <div class="swap-text">
+      <span class="strike">Whole Milk</span>
+      <span>Almond Milk</span>
+    </div>
+    <button class="btn btn-primary">Swap &amp; Save</button>
+  </div>
+  <p class="swap-note">Based on your recent health goals.</p>
+</div>
+
+<div class="section-head">
+  <h2>Recommended for You</h2>
+  <a href="#" class="link-green">See all</a>
+</div>
+
+<div class="hero-deal thumb-exotic">
+  <span class="hero-badge">SEASONAL PICK</span>
+  <div class="hero-title">Exotic Fruit Box</div>
+  <div class="hero-price">₹24.99</div>
+  <button class="add-btn hero-add">+</button>
+</div>
+
+<div class="grid-2">
+  {% for rec in recommendations[2:4] %}
+  <div class="product-card">
+    <div class="product-thumb thumb-{{ rec.img }}">{% if rec.img=='granola' %}🥣{% else %}🥬{% endif %}</div>
+    <div class="product-info">
+      <div class="product-name">{{ rec.name }}</div>
+      <div class="rating">★ {{ rec.rating }}</div>
+      <div class="product-bottom">
+        <span class="price">₹{{ '%.2f'|format(rec.price) }}</span>
+        <button class="add-btn">+</button>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+
+<div class="section-head"><h2>Frequently Bought</h2></div>
+<div class="scroll-row">
+  <div class="freq-card">
+    <div class="freq-thumb thumb-fruit">🍌</div>
+    <div class="row-body">
+      <div class="row-title">Organic Bananas</div>
+      <div class="row-sub">0.5 kg</div>
+    </div>
+    <button class="freq-add">$1.20 <span>+ Add</span></button>
+  </div>
+</div>
+
+<div class="section-head">
+  <h2>Flash Deals</h2>
+  <span class="pill" style="background:#FDE3E1;color:var(--coral);">Ends in 2h 45m</span>
+</div>
+
+{% for deal in deals %}
+<div class="card deal-row">
+  <div class="deal-thumb thumb-{{ 'bakery' if loop.index==1 else 'fruit' }}">{{ '🫒' if loop.index==1 else '🍓' }}</div>
+  <div class="row-body">
+    <div class="row-title">{{ deal.name }}</div>
+    <div class="row-sub">{{ deal.meta }}</div>
+    {% if deal.price %}
+    <div>
+      <span class="price">₹{{ '%.2f'|format(deal.price) }}</span>
+      <span class="old-price">₹{{ '%.2f'|format(deal.old_price) }}</span>
+    </div>
+    {% endif %}
+  </div>
+  <div style="display:flex;flex-direction:column;align-items:flex-end;gap:8px;">
+    <span class="discount-pill">-{{ deal.discount }}%</span>
+    <button class="btn btn-primary btn-sm">{{ 'Grab Deal' if loop.index==1 else 'Grab' }}</button>
+  </div>
+</div>
+{% endfor %}
+
+{% endblock %}
