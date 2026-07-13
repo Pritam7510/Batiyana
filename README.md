@@ -14,3 +14,4 @@ Daily Essentials catalog — 50+ everyday grocery items across categories (Dairy
 Personalized suggestions — smart swaps, frequently bought items, and flash deals
 One-tap checkout — a sticky Place Order bar summarizes your cart and submits the order
 Command history & confirmation flow — risky actions (like placing an order) ask for confirmation before executing, with a running log of recent voice commands
+   site Link:https://batiyana.web.app/
